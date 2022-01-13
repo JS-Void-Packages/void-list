@@ -19,7 +19,7 @@ list.add("Rainbow")
 console.log(list.get(2))
 
 // return true because Over was removed
-console.log(list.remove("Over"))
+console.log(list.remove(2))
 
 // Rainbow
 console.log(list.get(2))
