@@ -10,6 +10,10 @@
     "List",
     "Java List"
   ],
+  "repository": {
+    "url": "https://github.com/JS-Void-Packages/void-list",
+    "type": "git"
+  },
   "author": "Mrthomas20121",
   "license": "MIT"
 }
