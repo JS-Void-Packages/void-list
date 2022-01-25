@@ -42,13 +42,16 @@ class List extends Object {
     /**
      * remove an element from the list
      * @param {number} index 
-     * @returns {boolean}
+     * @returns {any}
      */
     remove(index) {
         let element = this.get(index)
         this.#internal.splice(index, 1)
 
-        return !this.contain(element)
+        if(!this.contain(element)) {
+            return element
+        }
+        return null
     }
 
     /**
@@ -62,6 +65,32 @@ class List extends Object {
                 this.remove(i)
             }
         }
+    }
+
+    /**
+     * call the predicate for each elements in the list
+     * @param {(index:number,element:any, list:List) => void} predicate 
+     */
+     forEach(predicate) {
+        for(let i = 0; i<this.#internal.length; i++) {
+            predicate(i, this.#internal[i], this)
+        }
+    }
+
+    /**
+     * remove elements in the list if they match the predicate
+     * @param {(index:number,element:any) => boolean} predicate
+     * @returns {List}
+     */
+    filter(predicate=(index, element) => false) {
+        let list = new List()
+        for(let i = 0; i<this.#internal.length; i++) {
+            let check = predicate(i, this.#internal[i])
+            if(check) {
+                list.add(this.#internal[i])
+            }
+        }
+        return list
     }
 
     /**
@@ -120,6 +149,10 @@ class List extends Object {
         return this.#internal.length == 0
     }
 
+    size() {
+        return this.#internal.length
+    }
+
     /**
      * convert a Array to a List
      * @param {*} object 
@@ -143,7 +176,7 @@ class List extends Object {
      * add elements from another list to this list
      * @param {List} list 
      */
-    fromList(list) {
+    static fromList(list) {
         for(let element of list) {
             this.add(element)
         }
@@ -193,6 +226,20 @@ class List extends Object {
 
     toString() {
         return `List {${this.#internal}}`
+    }
+
+    sort(predicate) {
+        this.#internal.sort(predicate)
+    }
+
+    /**
+     * Calls a defined callback function on each element of an list, and returns an list that contains the results.
+     * @param {(value: any, index: number, array: any[]) => any} predicate 
+     * @returns 
+     */
+    map(predicate) {
+        let array = this.#internal.map(predicate)
+        return List.fromArray(array)
     }
 
 }
