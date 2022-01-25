@@ -1,5 +1,8 @@
 const List = require('./index')
 
+/**
+ * @type {List<String>}
+ */
 let list = new List()
 list.add("Lazy")
 list.add("Foxes")
