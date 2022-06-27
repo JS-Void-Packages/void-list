@@ -1,20 +1,12 @@
-interface ListObject<T> {
-    type: 'List',
-    value: Array<T>
-}
+export = class List<T> implements Iterable<T> {
 
-export = class List<T> {
-
-    private #internal: Array<T>
+    private #internal: T[]
 
     /**
      * Create a list from an Array
      * @param object
      */
-    static fromArray(object: Array<any>): List<any>
-    static fromArray(object: Array<any>): List<String>
-    static fromArray(object: Array<any>): List<Boolean>
-    static fromArray(object: Array<any>): List<Number>
+    static fromArray(object: any[]): any
 
     /**
      * Create a list from another List
@@ -23,10 +15,22 @@ export = class List<T> {
     static fromList(list: List<any>): List<any>
 
     /**
-     * Create a list from an Object
+     * Convert json to a list.
      * @param object
      */
-    static fromJson(object: ListObject<any>): List<any>
+    static fromJson(object: {
+        type: 'List',
+        value: any[]
+    }): List<any>
+
+    /**
+     * Convert json to a list.
+     * @param object
+     */
+    fromJson(object: {
+        type: 'List',
+        value: T[]
+    }): void
 
     /**
      * get the element at this index
@@ -47,7 +51,7 @@ export = class List<T> {
     addAll(...element: T[]): Boolean
 
     /**
-     * remove the element from the list at that index
+     * remove the element from the list at that index and return it.
      * @param index 
      */
     remove(index: Number): T
@@ -56,52 +60,60 @@ export = class List<T> {
      * remove any elements that match the predicate
      * @param predicate 
      */
-    removeIf(predicate:(index: Number,value: T) => Boolean): void
+    removeIf(predicate:(value: T, index: number) => boolean): void
+
+    /**
+     * remove all elements from the list
+     */
+    removeAll(): void
 
     /**
      * Call the predicate for each elements in the list.
      * @param predicate 
      */
-     forEach(predicate?:(index: Number,value: T, list:List<T>) => void): void
+     forEach(predicate?:(index: number,value: T, list:List<T>) => void): void
 
     /**
      * Filter the list and return a new list containing the filtered elements.
      * @param predicate 
      */
-    filter(predicate?:(index: Number,value: T) => Boolean): List<T>
+    filter(predicate?:(value: T, index: number) => boolean): List<T>
 
     /**
      * find the first element matching the predicate and return it.
      * @param predicate 
      */
-    find(predicate?:(index: Number,value: T) => Boolean): T
+    find(predicate?:(value: T, index: number) => boolean): T
 
     /**
      * find all elements in the list matching the predicate and return them as a list
      * @param predicate
      */
-    findAll(predicate?:(index: Number,value: T) => Boolean): List<T>
+    findAll(predicate?:(value: T, index: number) => boolean): List<T>
 
     /**
      * Check if the list contain T element.
      * @param element 
      */
-    contain(element: T): Boolean
+    contain(element: T): boolean
 
     /**
      * return true if the list is empty, false otherwise.
      */
-    empty(): Boolean
+    empty(): boolean
 
     /**
      * return the size of the list
      */
-    size(): Number
+    size(): number
 
     /**
      * Convert the List to JSON
      */
-    toJson(): ListObject<T>
+    toJson(): {
+        type: 'List',
+        value: T[]
+    }
 
     /**
      * Sort the list based on the predicate result.
@@ -114,5 +126,5 @@ export = class List<T> {
      * Calls a defined predicate function on each element of a list, and returns a list that contains the results.
      * @param predicate A function that accepts up to three arguments. The map method calls the predicate function one time for each element in the list.
      */
-    map(predicate: (value: T, index: number, array: T[]) => any): List<any>
+    map(predicate: (value: T, index: number, list: List<T>) => any): List<any>
 }

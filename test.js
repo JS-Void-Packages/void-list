@@ -1,7 +1,7 @@
 const List = require('./index')
 
 /**
- * @type {List<String>}
+ * @type {List<string>}
  */
 let list = new List()
 list.add("Lazy")
@@ -11,4 +11,4 @@ list.add("Rainbow")
 console.log(list.get(2))
 console.log(list.remove(2))
 console.log(list.get(2))
-console.log(List.fromArray(["Lazy", "Foxes", "Over", "Rainbow"]))
+console.log(List.fromArray(["Lazy", "Foxes", "Over", "Rainbow"]).toString())

@@ -1,10 +1,6 @@
-module.exports = class List extends Object {
+class List {
 
     #internal = []
-
-    constructor() {
-        super()
-    }
 
     /**
      * get the element at this index
@@ -60,11 +56,16 @@ module.exports = class List extends Object {
      */
     removeIf(predicate) {
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(i, this.#internal[i])
+            let check = predicate(this.#internal[i], i)
             if(check) {
                 this.remove(i)
             }
         }
+    }
+
+    removeAll() {
+        // reset the internal
+        this.#internal = []
     }
 
     /**
@@ -85,7 +86,7 @@ module.exports = class List extends Object {
     filter(predicate=(index, element) => false) {
         let list = new List()
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(i, this.#internal[i])
+            let check = predicate(this.#internal[i], i)
             if(check) {
                 list.add(this.#internal[i])
             }
@@ -98,9 +99,9 @@ module.exports = class List extends Object {
      * @param {(index:number, element) => boolean} predicate 
      */
     find(predicate=(index, element) => false) {
-        let output
+        let output = null
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(i, this.#internal[i])
+            let check = predicate(this.#internal[i], i)
             if(check) {
                 output = this.#internal[i]
                 break
@@ -117,7 +118,7 @@ module.exports = class List extends Object {
      findAll(predicate=(index, element) => false) {
         let output = new List()
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(i, this.#internal[i])
+            let check = predicate(this.#internal[i], i)
             if(check) {
                 output.add(this.#internal[i])
             }
@@ -155,20 +156,16 @@ module.exports = class List extends Object {
 
     /**
      * convert a Array to a List
-     * @param {*} object 
+     * @param {any[]} object 
      * @returns {List}
      */
     static fromArray(object) {
         let list = new List()
-        if(Array.isArray(object)) {
-            for(let element of object) {
-                list.add(element)
-            }
+        
+        for(let element of object) {
+            list.add(element)
         }
-        else {
-            let msg = `Error, ${object} is not an Array!`
-            throw new SyntaxError(msg)
-        }
+
         return list
     }
 
@@ -182,22 +179,21 @@ module.exports = class List extends Object {
         }
     }
 
+    static fromJson(object) {
+        let list = new List()
+        return list.fromJson(object)
+    }
+
     /**
      * convert a Array to a List
      * @param {*} object 
      */
-     static fromJson(object) {
-        let list = new List()
-        if(Array.isArray(object.value) && object.hasOwnProperty('type') && object.type == 'list') {
+    fromJson(object) {
+        if(object.hasOwnProperty('type') && object.type == 'list') {
             for(let element of object.value) {
-                list.add(element)
+                this.add(element)
             }
         }
-        else {
-            let msg = `Error, ${object} is not an Array!`
-            throw new SyntaxError(msg)
-        }
-        return list
     }
 
     /**
@@ -220,10 +216,6 @@ module.exports = class List extends Object {
         }
     }
 
-    [Symbol.toStringTag]() {
-        return `List {${this.#internal}}`
-    }
-
     toString() {
         return `List {${this.#internal}}`
     }
@@ -234,12 +226,18 @@ module.exports = class List extends Object {
 
     /**
      * Calls a defined callback function on each element of an list, and returns an list that contains the results.
-     * @param {(value: any, index: number, array: any[]) => any} predicate 
+     * @param {(value: any, index: number, list: List) => any} predicate 
      * @returns 
      */
     map(predicate) {
-        let array = this.#internal.map(predicate)
-        return List.fromArray(array)
+        let list = new List()
+        for(let i = 0; i<this.#internal.length; i++) {
+            let value = this.#internal[i]
+            list.add(predicate(index, value, this))
+        }
+        return list
     }
 
 }
+
+module.exports = List
