@@ -13,3 +13,6 @@ First release
 ## 1.0.6
 - Added Typings
 - Added forEach and filter methods.
+## 1.0.7
+- Added `empty()` method.
+- Changed `map()`.
