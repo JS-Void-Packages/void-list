@@ -143,10 +143,30 @@ class List {
     }
 
     /**
-     * 
+     * check if all elements from x list are is in the list
+     * @param {List} list 
+     * @returns {boolean}
+     */
+    containsAll(list) {
+        let check = false
+        for(let item of list) {
+            if(this.contain(item)) {
+                check = true
+                break
+            }
+        }
+        return check
+    }
+
+    /**
+     * @deprecated since version 1.0.8, use  {@Link isEmpty()} instead
      * @returns {boolean}
      */
     empty() {
+        return this.#internal.length == 0
+    }
+
+    isEmpty() {
         return this.#internal.length == 0
     }
 
@@ -217,11 +237,25 @@ class List {
     }
 
     toString() {
-        return `List {${this.#internal}}`
+        return `List [${this.#internal}]`
     }
 
     sort(predicate) {
         this.#internal.sort(predicate)
+    }
+
+    set(i, element) {
+        this.#internal[i] = element
+        return element
+    }
+
+    /**
+     * indexOf is the only method using the array indexOf
+     * @param {*} element 
+     * @returns 
+     */
+    indexOf(element) {
+        return this.#internal.indexOf(element)
     }
 
     /**
@@ -238,6 +272,15 @@ class List {
         return list
     }
 
+    /**
+     * Shuffles list in place.
+     */  
+    shuffle() {
+        for (let i = this.#internal.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.#internal[i], this.#internal[j]] = [this.#internal[j], this.#internal[i]];
+        }
+    }
 }
 
 module.exports = List
