@@ -1,4 +1,4 @@
-export = class List<T> implements Iterable<T> {
+export = class List<T> {
 
     private #internal: T[]
 
@@ -98,9 +98,18 @@ export = class List<T> implements Iterable<T> {
     contain(element: T): boolean
 
     /**
+     * Check if the list contain All elements from another list.
+     * @param list 
+     */
+     containAll(list: List<T>): boolean
+
+    /**
      * return true if the list is empty, false otherwise.
+     * @deprecated since version 1.0.8, use  {@Link isEmpty()} instead
      */
     empty(): boolean
+
+    isEmpty(): boolean
 
     /**
      * return the size of the list
@@ -123,8 +132,30 @@ export = class List<T> implements Iterable<T> {
     sort(predicate: (a: T, b: T) => number): void
 
     /**
+     * Replace the element at x index
+     * @param index 
+     * @param element 
+     */
+    set(index:number, element:T): T
+
+    /**
+     * Get the index of an element. return -1 if not found.
+     * @param element 
+     */
+    indexOf(element:T): number
+
+    /**
      * Calls a defined predicate function on each element of a list, and returns a list that contains the results.
      * @param predicate A function that accepts up to three arguments. The map method calls the predicate function one time for each element in the list.
      */
     map(predicate: (value: T, index: number, list: List<T>) => any): List<any>
+
+    /**
+     * Shuffles list in place.
+     */  
+     shuffle(): void
+
+     [Symbol.iterator](): Iterator<T>;
+
+     toString(): string
 }
