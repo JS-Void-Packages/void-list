@@ -1,10 +1,6 @@
-class List extends Object {
+class List {
 
     #internal = []
-
-    constructor() {
-        super()
-    }
 
     /**
      * get the element at this index
@@ -60,11 +56,16 @@ class List extends Object {
      */
     removeIf(predicate) {
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(i, this.#internal[i])
+            let check = predicate(this.#internal[i], i)
             if(check) {
                 this.remove(i)
             }
         }
+    }
+
+    removeAll() {
+        // reset the internal
+        this.#internal = []
     }
 
     /**
@@ -85,7 +86,7 @@ class List extends Object {
     filter(predicate=(index, element) => false) {
         let list = new List()
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(i, this.#internal[i])
+            let check = predicate(this.#internal[i], i)
             if(check) {
                 list.add(this.#internal[i])
             }
@@ -98,9 +99,9 @@ class List extends Object {
      * @param {(index:number, element) => boolean} predicate 
      */
     find(predicate=(index, element) => false) {
-        let output
+        let output = null
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(i, this.#internal[i])
+            let check = predicate(this.#internal[i], i)
             if(check) {
                 output = this.#internal[i]
                 break
@@ -117,7 +118,7 @@ class List extends Object {
      findAll(predicate=(index, element) => false) {
         let output = new List()
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(i, this.#internal[i])
+            let check = predicate(this.#internal[i], i)
             if(check) {
                 output.add(this.#internal[i])
             }
@@ -142,10 +143,30 @@ class List extends Object {
     }
 
     /**
-     * 
+     * check if all elements from x list are is in the list
+     * @param {List} list 
+     * @returns {boolean}
+     */
+    containsAll(list) {
+        let check = false
+        for(let item of list) {
+            if(this.contain(item)) {
+                check = true
+                break
+            }
+        }
+        return check
+    }
+
+    /**
+     * @deprecated since version 1.0.8, use  {@Link isEmpty()} instead
      * @returns {boolean}
      */
     empty() {
+        return this.#internal.length == 0
+    }
+
+    isEmpty() {
         return this.#internal.length == 0
     }
 
@@ -155,20 +176,16 @@ class List extends Object {
 
     /**
      * convert a Array to a List
-     * @param {*} object 
+     * @param {any[]} object 
      * @returns {List}
      */
     static fromArray(object) {
         let list = new List()
-        if(Array.isArray(object)) {
-            for(let element of object) {
-                list.add(element)
-            }
+        
+        for(let element of object) {
+            list.add(element)
         }
-        else {
-            let msg = `Error, ${object} is not an Array!`
-            throw new SyntaxError(msg)
-        }
+
         return list
     }
 
@@ -182,22 +199,21 @@ class List extends Object {
         }
     }
 
+    static fromJson(object) {
+        let list = new List()
+        return list.fromJson(object)
+    }
+
     /**
      * convert a Array to a List
      * @param {*} object 
      */
-     static fromJson(object) {
-        let list = new List()
-        if(Array.isArray(object.value) && object.hasOwnProperty('type') && object.type == 'list') {
+    fromJson(object) {
+        if(object.hasOwnProperty('type') && object.type == 'list') {
             for(let element of object.value) {
-                list.add(element)
+                this.add(element)
             }
         }
-        else {
-            let msg = `Error, ${object} is not an Array!`
-            throw new SyntaxError(msg)
-        }
-        return list
     }
 
     /**
@@ -220,26 +236,49 @@ class List extends Object {
         }
     }
 
-    [Symbol.toStringTag]() {
-        return `List {${this.#internal}}`
-    }
-
     toString() {
-        return `List {${this.#internal}}`
+        return `List [${this.#internal}]`
     }
 
     sort(predicate) {
         this.#internal.sort(predicate)
     }
 
+    set(i, element) {
+        this.#internal[i] = element
+        return element
+    }
+
+    /**
+     * indexOf is the only method using the array indexOf
+     * @param {*} element 
+     * @returns 
+     */
+    indexOf(element) {
+        return this.#internal.indexOf(element)
+    }
+
     /**
      * Calls a defined callback function on each element of an list, and returns an list that contains the results.
-     * @param {(value: any, index: number, array: any[]) => any} predicate 
+     * @param {(value: any, index: number, list: List) => any} predicate 
      * @returns 
      */
     map(predicate) {
-        let array = this.#internal.map(predicate)
-        return List.fromArray(array)
+        let list = new List()
+        for(let i = 0; i<this.#internal.length; i++) {
+            let value = this.#internal[i]
+            list.add(predicate(index, value, this))
+        }
+        return list
     }
 
+    /**
+     * Shuffles list in place.
+     */  
+    shuffle() {
+        for (let i = this.#internal.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.#internal[i], this.#internal[j]] = [this.#internal[j], this.#internal[i]];
+        }
+    }
 }
