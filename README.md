@@ -24,6 +24,13 @@ console.log(list.remove(2))
 // Rainbow
 console.log(list.get(2))
 
+// shuffle the list
+list.shuffle()
+console.log(list.toString())
+
+// get the index for Lazy
+console.log(list.indexOf("Lazy"))
+
 // create a list from an array
 let l = List.fromArray(["Lazy", "Foxes", "Over", "Rainbow"])
 ```
