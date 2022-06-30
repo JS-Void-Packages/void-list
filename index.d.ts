@@ -32,20 +32,61 @@ export = class List<T> {
         value: T[]
     }): void
 
+    
     /**
-     * get the element at this index
+     * Adds all the elements of an list into a string, separated by the specified separator string.
+     * @param separator A string used to separate one element of the list from the next in the resulting string. If omitted, the list elements are separated with a comma.
+     */
+    join(separator?: string): string
+
+    /**
+     * Removes the first element from an list and returns it.
+     * If the list is empty, undefined is returned and the list is not modified.
+     */
+    shift(): T | undefined
+
+    /**
+     * Returns a copy of a section of an list.
+     * For both start and end, a negative index can be used to indicate an offset from the end of the list.
+     * For example, -2 refers to the second to last element of the list.
+     * @param start The beginning index of the specified portion of the list.
+     * If start is undefined, then the slice begins at index 0.
+     * @param end The end index of the specified portion of the list. This is exclusive of the element at the index 'end'.
+     * If end is undefined, then the slice extends to the end of the list.
+     */
+    slice(start?: number, end?: number): List<T>
+
+    /**
+     * Create a copy of the list
+     */
+    copy(): List<T>
+
+    /**
+     * Reverses the elements in an list in place.
+     * This method mutates the list
+     */
+    reverse(): void
+
+    /**
+     * Return the index of all elements in the list.
+     */
+    getAllIndexes(): List<number>
+
+    /**
+     * Get the element at this index.
      * @param index 
      */
     get(index:Number):T
 
     /**
-     * add an element to the list
+     * Add an element to the list
      * @param element
      */
     add(element: T): Boolean
 
     /**
-     * add all the elements to the list
+     * Add all elements to the list.
+     * Return true if they were all added.
      * @param element 
      */
     addAll(...element: T[]): Boolean
@@ -98,7 +139,7 @@ export = class List<T> {
     contain(element: T): boolean
 
     /**
-     * Check if the list contain All elements from another list.
+     * Check if the list contain All elements of another list.
      * @param list 
      */
      containAll(list: List<T>): boolean
