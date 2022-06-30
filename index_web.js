@@ -3,6 +3,54 @@ class List {
     #internal = []
 
     /**
+     * Create a copy of this list
+     * @returns 
+     */
+    copy() {
+        return List.fromArray(this.#internal)
+    }
+
+    shift() {
+        this.#internal.shift()
+    }
+
+    join(seperator=',') {
+        return this.#internal.join(seperator)
+    }
+
+    reverse() {
+        for (let i = 0; i < this.#internal.length / 2; i++) {
+            let temp = this.#internal[i];
+            this.#internal[i] = this.#internal[this.#internal.length - 1 - i];
+            this.#internal[this.#internal.length - 1 - i] = temp;
+        }
+    }
+
+    /**
+     *  Returns a copy of a section of an list.
+     * @param {number} start 
+     * @param {number} end 
+     * @returns 
+     */
+    slice(start=0, end=0) {
+        let copy = this.copy()
+        if(end == 0) {
+            copy.#internal.slice(start)
+        }
+        else if(start == 0 && end == 0) {
+            copy.#internal.slice()
+        }
+        else {
+            copy.#internal.slice(start, end)
+        }
+        return copy
+    }
+
+    getAllIndexes() {
+        return this.map((value, index, list) => index)
+    }
+
+    /**
      * get the element at this index
      * @param {number} index 
      * @returns 
@@ -52,7 +100,7 @@ class List {
 
     /**
      * remove elements in the list if they match the predicate
-     * @param {(index:number,element:any) => boolean} predicate 
+     * @param {(element:any, index:number) => boolean} predicate 
      */
     removeIf(predicate) {
         for(let i = 0; i<this.#internal.length; i++) {
@@ -70,11 +118,11 @@ class List {
 
     /**
      * call the predicate for each elements in the list
-     * @param {(index:number,element:any, list:List) => void} predicate 
+     * @param {(element:any, index:number, list:List) => boolean} predicate 
      */
      forEach(predicate) {
         for(let i = 0; i<this.#internal.length; i++) {
-            predicate(i, this.#internal[i], this)
+            predicate(this.#internal[i], i, this)
         }
     }
 
@@ -267,7 +315,7 @@ class List {
         let list = new List()
         for(let i = 0; i<this.#internal.length; i++) {
             let value = this.#internal[i]
-            list.add(predicate(index, value, this))
+            list.add(predicate(value, i, this))
         }
         return list
     }
