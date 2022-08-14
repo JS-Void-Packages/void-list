@@ -83,6 +83,13 @@ class List {
         return bool
     }
 
+    addIf(other, predicate) {
+        let bool = predicate(this, other)
+        if(bool) {
+            this.fromList(other)
+        }
+    }
+
     /**
      * remove an element from the list
      * @param {number} index 
@@ -128,10 +135,10 @@ class List {
 
     /**
      * remove elements in the list if they match the predicate
-     * @param {(index:number,element:any) => boolean} predicate
+     * @param {(element:any, index:number) => boolean} predicate
      * @returns {List}
      */
-    filter(predicate=(index, element) => false) {
+    filter(predicate=(element, i) => false) {
         let list = new List()
         for(let i = 0; i<this.#internal.length; i++) {
             let check = predicate(this.#internal[i], i)
@@ -144,9 +151,9 @@ class List {
 
     /**
      * find the first element that match
-     * @param {(index:number, element) => boolean} predicate 
+     * @param {(element:any, index:number => boolean} predicate 
      */
-    find(predicate=(index, element) => false) {
+    find(predicate=(element, i) => false) {
         let output = null
         for(let i = 0; i<this.#internal.length; i++) {
             let check = predicate(this.#internal[i], i)
@@ -163,7 +170,7 @@ class List {
      * @param {(index:number, element) => boolean} predicate 
      * @returns {List}
      */
-     findAll(predicate=(index, element) => false) {
+     findAll(predicate=(element, i) => false) {
         let output = new List()
         for(let i = 0; i<this.#internal.length; i++) {
             let check = predicate(this.#internal[i], i)
@@ -223,6 +230,16 @@ class List {
     }
 
     /**
+     * add elements from another list to this list
+     * @param {List} list 
+     */
+    fromList(list) {
+        for(let element of list) {
+            this.add(element)
+        }
+    }
+
+    /**
      * convert a Array to a List
      * @param {any[]} object 
      * @returns {List}
@@ -242,9 +259,7 @@ class List {
      * @param {List} list 
      */
     static fromList(list) {
-        for(let element of list) {
-            this.add(element)
-        }
+        return list.fromList(list)
     }
 
     static fromJson(object) {
@@ -327,6 +342,32 @@ class List {
         for (let i = this.#internal.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [this.#internal[i], this.#internal[j]] = [this.#internal[j], this.#internal[i]];
+        }
+    }
+
+    toArray() {
+        return this.#internal
+    }
+
+    /**
+     * check if both list have the same internal.
+     * @param {List} other 
+     */
+    equals(other) {
+        return !this.isEmpty() && !other.isEmpty() && this.containsAll(other) && this.size() == other.size()
+    }
+
+    /**
+     * Retains only the elements in this list that are contained in the other List.
+     * @param {List} other 
+     */
+    retainAll(other) {
+        // nothing change if any of the lists are empty
+        if(this.isEmpty() || other.isEmpty()) {
+            return this
+        }
+        else {
+            return this.copy().filter(element => other.contain(element))            
         }
     }
 }

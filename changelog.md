@@ -36,7 +36,7 @@
 - `empty()`.
 
 ### Changed
-- `map` no longer call `[].map()` in the code
+- `map()` no longer call `[].map()` in the code
 
 ## [1.0.8] - 28-06-2022
 
@@ -61,3 +61,15 @@
 ### Fixed
 - Fixed a crash in the map.
 - Fixed a bug where `forEach` was using `(index, value, list)` for the predicate instead of `(value, index, list)`
+8
+## [1.1.0] 14-08-2022
+
+### Added
+- `toArray()` => return the internal array.
+- `equals(otherList)` => check if both list have the same internal. (they don't have to be the same object)
+- `retainAll(otherList)` => Retains only the elements in this list that are contained in the other List.
+- `fromList(otherList)`(non static) => add all elements from another list to this one
+- `addIf(otherList, predicate)` => add another list content to this one if it match the predicate
+
+### Fixed
+- Fixed `static fromList()` not working properly

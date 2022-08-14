@@ -22,3 +22,6 @@ console.log(list.toString())
 list.reverse()
 console.log(list.toString())
 console.log(list.getAllIndexes().toString())
+
+let copy = list.copy()
+console.log(list.equals(copy))

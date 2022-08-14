@@ -82,14 +82,21 @@ export = class List<T> {
      * Add an element to the list
      * @param element
      */
-    add(element: T): Boolean
+    add(element: T): boolean
 
     /**
      * Add all elements to the list.
      * Return true if they were all added.
      * @param element 
      */
-    addAll(...element: T[]): Boolean
+    addAll(...element: T[]): boolean
+
+    /**
+     * add another list content to this one if it match the predicate
+     * @param other another list
+     * @param predicate list predicate
+     */
+    addIf(other:List<T>, predicate:(list:List<T>, other:List<T>) => boolean): void
 
     /**
      * remove the element from the list at that index and return it.
@@ -199,4 +206,20 @@ export = class List<T> {
      [Symbol.iterator](): Iterator<T>;
 
      toString(): string
+
+     toArray(): T[]
+
+     /**
+     * check if both list have the same internal.
+     * @param other another list 
+     */
+    equals(other:List<T>): boolean
+
+    /**
+     * Retains only the elements in this list that are contained in the other List.
+     * @param other another list
+     */
+     retainAll(other:List<T>): List<T>
+
+     fromList(list:List<T>): void
 }
