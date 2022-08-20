@@ -73,3 +73,13 @@
 
 ### Fixed
 - Fixed `static fromList()` not working properly
+
+## [1.1.1] 20-08-2022
+
+### Added
+- `clear()` => same as `removeAll()`
+- `fromArray(array)`(non static) => same as the static `fromArray(array)` method.
+- `removeALLBut(predicate)` => remove all elements that do not match the predicate
+
+### Fixed
+- Fixed issues with the typings

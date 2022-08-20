@@ -1,3 +1,11 @@
+/**
+ * void-list by Mrthomas20121
+ * Copyright 2021-2022
+ */
+
+/**
+ * List class
+ */
 class List {
 
     #internal = []
@@ -118,9 +126,32 @@ class List {
         }
     }
 
+    /**
+     * remove all elements in the list that does not match the predicate
+     * @param {(element:any, index:number) => boolean} predicate 
+     */
+    removeALLBut(predicate) {
+        for(let i = 0; i<this.#internal.length; i++) {
+            let check = predicate(this.#internal[i], i)
+            if(!check) {
+                this.remove(i)
+            }
+        }
+    }
+
+    /**
+     * Remove All elements from the list.
+     */
     removeAll() {
         // reset the internal
         this.#internal = []
+    }
+
+    /**
+     * Same as removeAll
+     */
+    clear() {
+        this.removeAll()
     }
 
     /**
@@ -245,13 +276,18 @@ class List {
      * @returns {List}
      */
     static fromArray(object) {
-        let list = new List()
-        
-        for(let element of object) {
-            list.add(element)
-        }
+        return new List().fromArray(object)
+    }
 
-        return list
+    /**
+     * convert a Array to a List
+     * @param {any[]} object 
+     */
+    fromArray(object) {
+        for(let element of object) {
+            this.add(element)
+        }
+        return this
     }
 
     /**
@@ -371,3 +407,5 @@ class List {
         }
     }
 }
+
+module.exports = List

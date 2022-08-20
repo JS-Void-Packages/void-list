@@ -1,3 +1,11 @@
+/**
+ * void-list by Mrthomas20121
+ * Copyright 2021-2022
+ */
+
+/**
+ * List class
+ */
 export = class List<T> {
 
     private #internal: T[]
@@ -6,7 +14,7 @@ export = class List<T> {
      * Create a list from an Array
      * @param object
      */
-    static fromArray(object: any[]): any
+    static fromArray(object: any[]): List<any>
 
     /**
      * Create a list from another List
@@ -22,6 +30,13 @@ export = class List<T> {
         type: 'List',
         value: any[]
     }): List<any>
+
+    /**
+     * add all elements from the array to this list
+     * not the same as addAll
+     * @param object
+     */
+    fromArray(object: T[]): this
 
     /**
      * Convert json to a list.
@@ -110,16 +125,28 @@ export = class List<T> {
      */
     removeIf(predicate:(value: T, index: number) => boolean): void
 
+
+    /**
+     * remove all elements in the list that does not match the predicate
+     * @param predicate 
+     */
+    removeALLBut(predicate:(value: T, index: number) => boolean): void
+
     /**
      * remove all elements from the list
      */
     removeAll(): void
 
     /**
+     * remove all elements from the list
+     */
+    clear(): void
+
+    /**
      * Call the predicate for each elements in the list.
      * @param predicate 
      */
-     forEach(predicate?:(index: number,value: T, list:List<T>) => void): void
+    forEach(predicate?:(value: T, index: number, list:List<T>) => void): void
 
     /**
      * Filter the list and return a new list containing the filtered elements.
@@ -168,7 +195,7 @@ export = class List<T> {
      * Convert the List to JSON
      */
     toJson(): {
-        type: 'List',
+        type: 'list',
         value: T[]
     }
 
@@ -201,13 +228,13 @@ export = class List<T> {
     /**
      * Shuffles list in place.
      */  
-     shuffle(): void
+    shuffle(): void
 
-     [Symbol.iterator](): Iterator<T>;
+    [Symbol.iterator](): Iterator<T>;
 
-     toString(): string
+    toString(): string
 
-     toArray(): T[]
+    toArray(): T[]
 
      /**
      * check if both list have the same internal.
@@ -219,7 +246,7 @@ export = class List<T> {
      * Retains only the elements in this list that are contained in the other List.
      * @param other another list
      */
-     retainAll(other:List<T>): List<T>
+    retainAll(other:List<T>): List<T>
 
-     fromList(list:List<T>): void
+    fromList(list:List<T>): void
 }

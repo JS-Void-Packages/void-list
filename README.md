@@ -14,6 +14,7 @@ list.add("Lazy")
 list.add("Foxes")
 list.add("Over")
 list.add("Rainbow")
+list.addAll('Not', 'J')
 
 // Over
 console.log(list.get(2))

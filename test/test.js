@@ -1,4 +1,4 @@
-const List = require('./index')
+const List = require('../dist/index')
 
 /**
  * @type {List<string>}
@@ -8,6 +8,7 @@ list.add("Lazy")
 list.add("Foxes")
 list.add("Over")
 list.add("Rainbow")
+list.addAll('Not', 'J')
 
 console.log(list.get(2))
 console.log(list.remove(2))
