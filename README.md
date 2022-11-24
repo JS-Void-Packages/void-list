@@ -1,7 +1,5 @@
 # void-list
 Add Java Style List to Javascript
-## Does it work like Java lists?
-Absolutely! the same methods you use in java also exists in this(add, remove, empty, etc...).
 ## Instalation
 `npm install void-list`
 ## Example
@@ -19,7 +17,7 @@ list.addAll('Not', 'J')
 // Over
 console.log(list.get(2))
 
-// return true because Over was removed
+// return the removed element
 console.log(list.remove(2))
 
 // Rainbow

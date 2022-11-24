@@ -11,6 +11,16 @@ class List {
     #internal = []
 
     /**
+     * Merge lists together
+     * @param  {...List} lists 
+     */
+    static merge(...lists) {
+        let list = new List()
+        lists.forEach(l => list.fromList(l))
+        return list
+    }
+
+    /**
      * Create a copy of this list
      * @returns 
      */
@@ -70,7 +80,7 @@ class List {
     /**
      * add a element to the list
      * @param {any} element 
-     *  @returns {boolean}
+     * @returns {boolean}
      */
     add(element) {
         this.#internal.push(element)
@@ -145,18 +155,19 @@ class List {
     removeAll() {
         // reset the internal
         this.#internal = []
+        return this.isEmpty()
     }
 
     /**
      * Same as removeAll
      */
     clear() {
-        this.removeAll()
+        return this.removeAll()
     }
 
     /**
      * call the predicate for each elements in the list
-     * @param {(element:any, index:number, list:List) => boolean} predicate 
+     * @param {(element:any, index:number) => boolean} predicate 
      */
      forEach(predicate) {
         for(let i = 0; i<this.#internal.length; i++) {
@@ -198,7 +209,7 @@ class List {
 
     /**
      * return a new List containing the elements
-     * @param {(index:number, element) => boolean} predicate 
+     * @param {(element:any, index:number) => boolean} predicate 
      * @returns {List}
      */
      findAll(predicate=(element, i) => false) {

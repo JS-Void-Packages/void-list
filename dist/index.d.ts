@@ -1,35 +1,39 @@
-/**
- * void-list by Mrthomas20121
- * Copyright 2021-2022
- */
+//
+// void-list by Mrthomas20121
+// Copyright 2021-2022
+//
 
 /**
  * List class
  */
 export = class List<T> {
 
-    private #internal: T[]
+    /**
+     * Merge the lists into one
+     * @param lists 
+     */
+    static merge<U>(...lists: List<U>[]): List<U>
 
     /**
      * Create a list from an Array
      * @param object
      */
-    static fromArray(object: any[]): List<any>
+    static fromArray<U>(object: U[]): List<U>
 
     /**
      * Create a list from another List
      * @param list
      */
-    static fromList(list: List<any>): List<any>
+    static fromList<U>(list: List<U>): List<U>
 
     /**
      * Convert json to a list.
      * @param object
      */
-    static fromJson(object: {
+    static fromJson<U>(object: {
         type: 'List',
-        value: any[]
-    }): List<any>
+        value: U[]
+    }): List<U>
 
     /**
      * add all elements from the array to this list
@@ -45,7 +49,7 @@ export = class List<T> {
     fromJson(object: {
         type: 'List',
         value: T[]
-    }): void
+    }): this
 
     
     /**
@@ -134,37 +138,38 @@ export = class List<T> {
 
     /**
      * remove all elements from the list
+     * return true if it was not successful
      */
-    removeAll(): void
+    removeAll(): boolean
 
     /**
-     * remove all elements from the list
+     * Alias for removeAll
      */
-    clear(): void
+    clear(): boolean
 
     /**
-     * Call the predicate for each elements in the list.
+     * Performs the specified action for each element in an list.
      * @param predicate 
      */
-    forEach(predicate?:(value: T, index: number, list:List<T>) => void): void
+    forEach(predicate:(value: T, index: number) => boolean): void
 
     /**
      * Filter the list and return a new list containing the filtered elements.
      * @param predicate 
      */
-    filter(predicate?:(value: T, index: number) => boolean): List<T>
+    filter(predicate:(value: T, index: number) => boolean): List<T>
 
     /**
      * find the first element matching the predicate and return it.
      * @param predicate 
      */
-    find(predicate?:(value: T, index: number) => boolean): T
+    find(predicate:(value: T, index: number) => boolean): T
 
     /**
      * find all elements in the list matching the predicate and return them as a list
      * @param predicate
      */
-    findAll(predicate?:(value: T, index: number) => boolean): List<T>
+    findAll(predicate:(value: T, index: number) => boolean): List<T>
 
     /**
      * Check if the list contain T element.
@@ -223,7 +228,7 @@ export = class List<T> {
      * Calls a defined predicate function on each element of a list, and returns a list that contains the results.
      * @param predicate A function that accepts up to three arguments. The map method calls the predicate function one time for each element in the list.
      */
-    map(predicate: (value: T, index: number, list: List<T>) => any): List<any>
+    map<U>(predicate: (value: T, index: number, list: List<T>) => U): List<U>
 
     /**
      * Shuffles list in place.

@@ -26,3 +26,5 @@ console.log(list.getAllIndexes().toString())
 
 let copy = list.copy()
 console.log(list.equals(copy))
+
+let merge = List.merge(list, copy)

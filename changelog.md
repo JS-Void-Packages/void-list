@@ -83,3 +83,11 @@
 
 ### Fixed
 - Fixed issues with the typings
+
+## [1.1.2] 24-11-2022
+
+### Added
+- `static merge(lists)` => merge the lists into one.
+
+### Changed
+- typing for static methods is better now.
