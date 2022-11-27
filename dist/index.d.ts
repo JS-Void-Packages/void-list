@@ -76,9 +76,22 @@ export = class List<T> {
     slice(start?: number, end?: number): List<T>
 
     /**
+     * fill every field between the two indexes by the provided value, return the modified list
+     * @param index1 the lowest index
+     * @param index2 the highest index
+     * @param value 
+     */
+    fill(index1:number, index2:number, value: T): List<T>
+
+    /**
      * Create a copy of the list
      */
     copy(): List<T>
+
+    /**
+     * Alias for copy()
+     */
+    clone(): List<T>
 
     /**
      * Reverses the elements in an list in place.

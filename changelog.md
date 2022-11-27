@@ -91,3 +91,9 @@
 
 ### Changed
 - typing for static methods is better now.
+
+## [1.1.3] 27-11-2022
+
+### Added
+- `fill(index1, index2, value)` => fill every field between the two indexes by the provided value, return the modified list
+- `clone()` => alias for `copy()`

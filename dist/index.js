@@ -21,11 +21,32 @@ class List {
     }
 
     /**
+     * 
+     * @param {number} index1 the lowest number
+     * @param {number} index2 the highest number
+     * @param {any} value the value
+     * @returns 
+     */
+    fill(index1, index2, value) {
+        let copy = this.copy()
+        for (let i = 0; i < this.#internal.length; i++) {
+            if(i >= index1 && i <= index2) {
+                copy.#internal[i] = value
+            }
+        }
+        return copy
+    }
+
+    /**
      * Create a copy of this list
      * @returns 
      */
     copy() {
         return List.fromArray(this.#internal)
+    }
+
+    clone() {
+        return this.copy()
     }
 
     shift() {
