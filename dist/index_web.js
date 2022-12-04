@@ -20,12 +20,63 @@
         return list
     }
 
+        /**
+     * create a list from those elements.
+     * @param  {...any} elements 
+     */
+         static from(...elements) {
+            return List.fromArray(elements)
+        }
+
+    /**
+     * convert a Array to a List
+     * @param {any[]} object 
+     * @returns {List}
+     */
+     static fromArray(object) {
+        return new List().fromArray(object)
+    }
+
+    /**
+     * add elements from another list to this list
+     * @param {List} list 
+     */
+     static fromList(list) {
+        return list.fromList(list)
+    }
+
+    static fromJson(object) {
+        let list = new List()
+        return list.fromJson(object)
+    }
+
+    /**
+     * 
+     * @param {number} index1 the lowest number
+     * @param {number} index2 the highest number
+     * @param {any} value the value
+     * @returns 
+     */
+    fill(index1, index2, value) {
+        let copy = this.copy()
+        for (let i = 0; i < this.#internal.length; i++) {
+            if(i >= index1 && i <= index2) {
+                copy.#internal[i] = value
+            }
+        }
+        return copy
+    }
+
     /**
      * Create a copy of this list
      * @returns 
      */
     copy() {
         return List.fromArray(this.#internal)
+    }
+
+    clone() {
+        return this.copy()
     }
 
     shift() {
@@ -155,13 +206,14 @@
     removeAll() {
         // reset the internal
         this.#internal = []
+        return this.isEmpty()
     }
 
     /**
      * Same as removeAll
      */
     clear() {
-        this.removeAll()
+        return this.removeAll()
     }
 
     /**
@@ -283,34 +335,12 @@
     /**
      * convert a Array to a List
      * @param {any[]} object 
-     * @returns {List}
-     */
-    static fromArray(object) {
-        return new List().fromArray(object)
-    }
-
-    /**
-     * convert a Array to a List
-     * @param {any[]} object 
      */
     fromArray(object) {
         for(let element of object) {
             this.add(element)
         }
         return this
-    }
-
-    /**
-     * add elements from another list to this list
-     * @param {List} list 
-     */
-    static fromList(list) {
-        return list.fromList(list)
-    }
-
-    static fromJson(object) {
-        let list = new List()
-        return list.fromJson(object)
     }
 
     /**

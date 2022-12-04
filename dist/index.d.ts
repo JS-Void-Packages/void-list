@@ -21,6 +21,12 @@ export = class List<T> {
     static fromArray<U>(object: U[]): List<U>
 
     /**
+     * Create a list from those elements
+     * @param elements 
+     */
+    static from<U>(...elements: U[]): List<U>
+
+    /**
      * Create a list from another List
      * @param list
      */
@@ -164,7 +170,7 @@ export = class List<T> {
      * Performs the specified action for each element in an list.
      * @param predicate 
      */
-    forEach(predicate:(value: T, index: number) => boolean): void
+    forEach(predicate:(value: T, index: number) => void): void
 
     /**
      * Filter the list and return a new list containing the filtered elements.

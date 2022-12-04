@@ -97,3 +97,11 @@
 ### Added
 - `fill(index1, index2, value)` => fill every field between the two indexes by the provided value, return the modified list
 - `clone()` => alias for `copy()`
+
+## [1.1.4] 04-12-2022
+
+### Added
+- `static from(...elements)` => create a list from those elements
+
+### Fixed
+- fixed typings for forEach

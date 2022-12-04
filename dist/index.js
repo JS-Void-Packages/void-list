@@ -20,6 +20,36 @@ class List {
         return list
     }
 
+        /**
+     * create a list from those elements.
+     * @param  {...any} elements 
+     */
+         static from(...elements) {
+            return List.fromArray(elements)
+        }
+
+    /**
+     * convert a Array to a List
+     * @param {any[]} object 
+     * @returns {List}
+     */
+     static fromArray(object) {
+        return new List().fromArray(object)
+    }
+
+    /**
+     * add elements from another list to this list
+     * @param {List} list 
+     */
+     static fromList(list) {
+        return list.fromList(list)
+    }
+
+    static fromJson(object) {
+        let list = new List()
+        return list.fromJson(object)
+    }
+
     /**
      * 
      * @param {number} index1 the lowest number
@@ -305,34 +335,12 @@ class List {
     /**
      * convert a Array to a List
      * @param {any[]} object 
-     * @returns {List}
-     */
-    static fromArray(object) {
-        return new List().fromArray(object)
-    }
-
-    /**
-     * convert a Array to a List
-     * @param {any[]} object 
      */
     fromArray(object) {
         for(let element of object) {
             this.add(element)
         }
         return this
-    }
-
-    /**
-     * add elements from another list to this list
-     * @param {List} list 
-     */
-    static fromList(list) {
-        return list.fromList(list)
-    }
-
-    static fromJson(object) {
-        let list = new List()
-        return list.fromJson(object)
     }
 
     /**
