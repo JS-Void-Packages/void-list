@@ -105,3 +105,13 @@
 
 ### Fixed
 - fixed typings for forEach
+
+## [1.1.5] 14-08-2023
+
+### Added
+- `ImmutableList` is a non modifiable list.
+- `ImmutableList.merge(list)` to merge multiple immutable lists into one.
+- `replace(i, value)` => alias for set
+
+### Fixed
+- fixed a few errors with the List
