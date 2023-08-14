@@ -8,25 +8,25 @@
  */
 class List {
 
-    #internal = []
+    #internal = [];
 
     /**
      * Merge lists together
      * @param  {...List} lists 
      */
     static merge(...lists) {
-        let list = new List()
-        lists.forEach(l => list.fromList(l))
+        let list = new List();
+        lists.forEach(l => list.fromList(l));
         return list
     }
 
-        /**
+    /**
      * create a list from those elements.
      * @param  {...any} elements 
      */
-         static from(...elements) {
-            return List.fromArray(elements)
-        }
+    static from(...elements) {
+        return List.fromArray(elements);
+    }
 
     /**
      * convert a Array to a List
@@ -34,7 +34,7 @@ class List {
      * @returns {List}
      */
      static fromArray(object) {
-        return new List().fromArray(object)
+        return new List().fromArray(object);
     }
 
     /**
@@ -42,12 +42,12 @@ class List {
      * @param {List} list 
      */
      static fromList(list) {
-        return list.fromList(list)
+        return list.fromList(list);
     }
 
     static fromJson(object) {
-        let list = new List()
-        return list.fromJson(object)
+        let list = new List();
+        return list.fromJson(object);
     }
 
     /**
@@ -58,13 +58,13 @@ class List {
      * @returns 
      */
     fill(index1, index2, value) {
-        let copy = this.copy()
+        let copy = this.copy();
         for (let i = 0; i < this.#internal.length; i++) {
             if(i >= index1 && i <= index2) {
-                copy.#internal[i] = value
+                copy.#internal[i] = value;
             }
         }
-        return copy
+        return copy;
     }
 
     /**
@@ -72,19 +72,19 @@ class List {
      * @returns 
      */
     copy() {
-        return List.fromArray(this.#internal)
+        return List.fromArray(this.#internal);
     }
 
     clone() {
-        return this.copy()
+        return this.copy();
     }
 
     shift() {
-        this.#internal.shift()
+        this.#internal.shift();
     }
 
     join(seperator=',') {
-        return this.#internal.join(seperator)
+        return this.#internal.join(seperator);
     }
 
     reverse() {
@@ -102,21 +102,21 @@ class List {
      * @returns 
      */
     slice(start=0, end=0) {
-        let copy = this.copy()
+        let copy = this.copy();
         if(end == 0) {
-            copy.#internal.slice(start)
+            copy.#internal.slice(start);
         }
         else if(start == 0 && end == 0) {
-            copy.#internal.slice()
+            copy.#internal.slice();
         }
         else {
-            copy.#internal.slice(start, end)
+            copy.#internal.slice(start, end);
         }
-        return copy
+        return copy;
     }
 
     getAllIndexes() {
-        return this.map((value, index, list) => index)
+        return this.map((value, index, list) => index);
     }
 
     /**
@@ -125,7 +125,7 @@ class List {
      * @returns 
      */
     get(index) {
-        return this.#internal[index]
+        return this.#internal[index];
     }
 
     /**
@@ -134,9 +134,9 @@ class List {
      * @returns {boolean}
      */
     add(element) {
-        this.#internal.push(element)
+        this.#internal.push(element);
 
-        return this.contain(element)
+        return this.contain(element);
     }
 
     /**
@@ -145,17 +145,29 @@ class List {
      * @returns {boolean} 
      */
     addAll(...elements) {
-        let bool = false
+        let bool = false;
         for(let element of elements) {
-            bool = this.add(element)
+            bool = this.add(element);
         }
-        return bool
+        return bool;
     }
 
+    /**
+     * add a element to the list if the predicate is true.
+     * @param {any} other 
+     * @param {List} predicate 
+     */
     addIf(other, predicate) {
-        let bool = predicate(this, other)
+        let bool = predicate(this, other);
         if(bool) {
-            this.fromList(other)
+            this.from(other);
+        }
+    }
+
+    addListIf(other, predicate) {
+        let bool = predicate(this, other);
+        if(bool) {
+            this.fromList(other);
         }
     }
 
@@ -165,13 +177,13 @@ class List {
      * @returns {any}
      */
     remove(index) {
-        let element = this.get(index)
-        this.#internal.splice(index, 1)
+        let element = this.get(index);
+        this.#internal.splice(index, 1);
 
         if(!this.contain(element)) {
-            return element
+            return element;
         }
-        return null
+        return null;
     }
 
     /**
@@ -180,9 +192,9 @@ class List {
      */
     removeIf(predicate) {
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(this.#internal[i], i)
+            let check = predicate(this.#internal[i], i);
             if(check) {
-                this.remove(i)
+                this.remove(i);
             }
         }
     }
@@ -193,9 +205,9 @@ class List {
      */
     removeALLBut(predicate) {
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(this.#internal[i], i)
+            let check = predicate(this.#internal[i], i);
             if(!check) {
-                this.remove(i)
+                this.remove(i);
             }
         }
     }
@@ -205,15 +217,15 @@ class List {
      */
     removeAll() {
         // reset the internal
-        this.#internal = []
-        return this.isEmpty()
+        this.#internal = [];
+        return this.isEmpty();
     }
 
     /**
      * Same as removeAll
      */
     clear() {
-        return this.removeAll()
+        return this.removeAll();
     }
 
     /**
@@ -232,14 +244,14 @@ class List {
      * @returns {List}
      */
     filter(predicate=(element, i) => false) {
-        let list = new List()
+        let list = new List();
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(this.#internal[i], i)
+            let check = predicate(this.#internal[i], i);
             if(check) {
-                list.add(this.#internal[i])
+                list.add(this.#internal[i]);
             }
         }
-        return list
+        return list;
     }
 
     /**
@@ -247,15 +259,15 @@ class List {
      * @param {(element:any, index:number => boolean} predicate 
      */
     find(predicate=(element, i) => false) {
-        let output = null
+        let output = null;
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(this.#internal[i], i)
+            let check = predicate(this.#internal[i], i);
             if(check) {
-                output = this.#internal[i]
+                output = this.#internal[i];
                 break
             }
         }
-        return output
+        return output;
     }
 
     /**
@@ -264,14 +276,14 @@ class List {
      * @returns {List}
      */
      findAll(predicate=(element, i) => false) {
-        let output = new List()
+        let output = new List();
         for(let i = 0; i<this.#internal.length; i++) {
-            let check = predicate(this.#internal[i], i)
+            let check = predicate(this.#internal[i], i);
             if(check) {
-                output.add(this.#internal[i])
+                output.add(this.#internal[i]);
             }
         }
-        return output
+        return output;
     }
 
     /**
@@ -280,14 +292,39 @@ class List {
      * @returns {boolean}
      */
     contain(element) {
-        let check = false
+        let check = false;
         for(let elem of this.#internal) {
             if(element == elem) {
-                check = true
+                check = true;
                 break
             }
         }
-        return check
+        return check;
+    }
+
+    /**
+     * Check if the predicate match any of the value inside the list
+     * @param {(element: any) => boolean} predicate 
+     * @returns {boolean}
+     */
+    match(predicate) {
+        let check = false;
+        for(let elem of this.#internal) {
+            if(predicate(elem)) {
+                check = true;
+                break
+            }
+        }
+        return check;
+    }
+
+    /**
+     * Replace the value at the index by this new value
+     * @param {number} index 
+     * @param {any} value 
+     */
+    replace(index, value) {
+        this.set(index, value);
     }
 
     /**
@@ -296,30 +333,30 @@ class List {
      * @returns {boolean}
      */
     containsAll(list) {
-        let check = false
+        let check = false;
         for(let item of list) {
             if(this.contain(item)) {
-                check = true
+                check = true;
                 break
             }
         }
-        return check
+        return check;
     }
 
     /**
-     * @deprecated since version 1.0.8, use  {@Link isEmpty()} instead
+     * @deprecated since version 1.0.8, use {@Link isEmpty()} instead
      * @returns {boolean}
      */
     empty() {
-        return this.#internal.length == 0
+        return this.#internal.length == 0;
     }
 
     isEmpty() {
-        return this.#internal.length == 0
+        return this.#internal.length == 0;
     }
 
     size() {
-        return this.#internal.length
+        return this.#internal.length;
     }
 
     /**
@@ -328,7 +365,7 @@ class List {
      */
     fromList(list) {
         for(let element of list) {
-            this.add(element)
+            this.add(element);
         }
     }
 
@@ -338,9 +375,9 @@ class List {
      */
     fromArray(object) {
         for(let element of object) {
-            this.add(element)
+            this.add(element);
         }
-        return this
+        return this;
     }
 
     /**
@@ -350,7 +387,7 @@ class List {
     fromJson(object) {
         if(object.hasOwnProperty('type') && object.type == 'list') {
             for(let element of object.value) {
-                this.add(element)
+                this.add(element);
             }
         }
     }
@@ -363,7 +400,7 @@ class List {
         return {
             type:'list',
             value:this.#internal
-        }
+        };
     }
 
     [Symbol.iterator]() {
@@ -372,20 +409,26 @@ class List {
     
         return {
             next: () => ({ value: data[++index], done: !(index in data) })
-        }
+        };
     }
 
     toString() {
-        return `List [${this.#internal}]`
+        return `List [${this.#internal}]`;
     }
 
     sort(predicate) {
-        this.#internal.sort(predicate)
+        this.#internal.sort(predicate);
     }
 
+    /**
+     * Replace the value at the index by a new value.
+     * @param {number} i 
+     * @param {*} element 
+     * @returns 
+     */
     set(i, element) {
-        this.#internal[i] = element
-        return element
+        this.#internal[i] = element;
+        return element;
     }
 
     /**
@@ -394,7 +437,7 @@ class List {
      * @returns 
      */
     indexOf(element) {
-        return this.#internal.indexOf(element)
+        return this.#internal.indexOf(element);
     }
 
     /**
@@ -403,12 +446,12 @@ class List {
      * @returns 
      */
     map(predicate) {
-        let list = new List()
+        let list = new List();
         for(let i = 0; i<this.#internal.length; i++) {
-            let value = this.#internal[i]
-            list.add(predicate(value, i, this))
+            let value = this.#internal[i];
+            list.add(predicate(value, i, this));
         }
-        return list
+        return list;
     }
 
     /**
@@ -422,7 +465,7 @@ class List {
     }
 
     toArray() {
-        return this.#internal
+        return this.#internal;
     }
 
     /**
@@ -430,7 +473,7 @@ class List {
      * @param {List} other 
      */
     equals(other) {
-        return !this.isEmpty() && !other.isEmpty() && this.containsAll(other) && this.size() == other.size()
+        return !this.isEmpty() && !other.isEmpty() && this.containsAll(other) && this.size() == other.size();
     }
 
     /**
@@ -440,12 +483,90 @@ class List {
     retainAll(other) {
         // nothing change if any of the lists are empty
         if(this.isEmpty() || other.isEmpty()) {
-            return this
+            return this;
         }
         else {
-            return this.copy().filter(element => other.contain(element))            
+            return this.copy().filter(element => other.contain(element));       
         }
     }
 }
 
-module.exports = List
+class ImmutableList extends List {
+
+    constructor(list) {
+        super();
+        list.forEach(elem => super.add(elem));
+    }
+
+    /**
+     * Merge lists together
+     * @param  {...ImmutableList} lists 
+     */
+    static merge(...lists) {
+        let list = new List();
+        lists.forEach(l => list.fromList(l));
+        return new ImmutableList(list);
+    }
+
+    fromList(list) {}
+
+    /**
+     * add a element to the list
+     * @param {any} element 
+     * @returns {boolean}
+     */
+    add(element) {
+        return false;
+    }
+
+    /**
+     * add all elements to the list
+     * @param  {...any} elements 
+     * @returns {boolean} 
+     */
+    addAll(...elements) {
+        return false;
+    }
+
+    /**
+     * add a element to the list if the predicate is true.
+     * @param {any} other 
+     * @param {List} predicate 
+     */
+    addIf(other, predicate) {}
+
+    addListIf(other, predicate) {}
+
+    /**
+     * remove an element from the list
+     * @param {number} index 
+     * @returns {any}
+     */
+    remove(index) {
+        return null;
+    }
+
+    /**
+     * remove elements in the list if they match the predicate
+     * @param {(element:any, index:number) => boolean} predicate 
+     */
+    removeIf(predicate) {}
+
+    /**
+     * remove all elements in the list that does not match the predicate
+     * @param {(element:any, index:number) => boolean} predicate 
+     */
+    removeALLBut(predicate) {}
+
+    /**
+     * Remove All elements from the list.
+     */
+    removeAll() {
+        return false;
+    }
+}
+
+module.exports = {
+    List,
+    ImmutableList
+}

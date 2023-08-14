@@ -6,7 +6,7 @@
 /**
  * List class
  */
-export = class List<T> {
+export class List<T> {
 
     /**
      * Merge the lists into one
@@ -130,11 +130,18 @@ export = class List<T> {
     addAll(...element: T[]): boolean
 
     /**
+     * add an element to this list if the predicate is true
+     * @param element the element to add to the list
+     * @param predicate list predicate
+     */
+    addIf(element:T, predicate:(list:List<T>, element:T) => boolean): void
+
+    /**
      * add another list content to this one if it match the predicate
      * @param other another list
      * @param predicate list predicate
      */
-    addIf(other:List<T>, predicate:(list:List<T>, other:List<T>) => boolean): void
+    addListIf(other:List<T>, predicate:(list:List<T>, other:List<T>) => boolean): void
 
     /**
      * remove the element from the list at that index and return it.
@@ -160,6 +167,18 @@ export = class List<T> {
      * return true if it was not successful
      */
     removeAll(): boolean
+
+    /**
+     * Check if the predicate match any of the value inside the list
+     */
+    match(predicate: (value: T) => boolean): boolean;
+
+    /**
+     * Alias for {@link set}, Replace the value at the index by a new value.
+     * @param index the index of the value
+     * @param value the new value
+     */
+    replace(index: Number, value: T): void;
 
     /**
      * Alias for removeAll
@@ -231,7 +250,7 @@ export = class List<T> {
     sort(predicate: (a: T, b: T) => number): void
 
     /**
-     * Replace the element at x index
+     * Replace the value at the index by a new value.
      * @param index 
      * @param element 
      */
@@ -273,4 +292,21 @@ export = class List<T> {
     retainAll(other:List<T>): List<T>
 
     fromList(list:List<T>): void
+}
+
+/**
+ * An ImmutableList is a list that cannot be modified
+ */
+export class ImmutableList<T> extends List<T> {
+    /**
+     * Create an immutable list from a list
+     * @param list any list
+     */
+    constructor(list: List<T>): ImmutableList<T>;
+
+    /**
+     * Merge multiple immutable lists into one
+     * @param lists 
+     */
+    static merge<U>(...lists: ImmutableList<U>[]): ImmutableList<U>;
 }
