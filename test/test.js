@@ -1,30 +1,31 @@
-const List = require('../dist/index')
+// or import { List } from 'void-list'
+const { List, ImmutableList } = require('../dist/index');
 
-/**
- * @type {List<string>}
- */
-let list = new List()
-list.add("Lazy")
-list.add("Foxes")
-list.add("Over")
-list.add("Rainbow")
-list.addAll('Not', 'J')
+let list = new List();
+list.add("Lazy");
+list.add("Foxes");
+list.add("Over");
+list.add("Rainbow");
+list.addAll('Not', 'J');
 
-console.log(list.get(2))
-console.log(list.remove(2))
-console.log(list.indexOf("Lazy"))
+// Over
+console.log(list.get(2));
 
-// shuffle
-console.log(list.toString())
-list.shuffle()
-console.log(list.toString())
+// return the removed element
+console.log(list.remove(2));
 
-// reverse the list
-list.reverse()
-console.log(list.toString())
-console.log(list.getAllIndexes().toString())
+// Rainbow
+console.log(list.get(2));
 
-let copy = list.copy()
-console.log(list.equals(copy))
+// shuffle the list
+list.shuffle();
+console.log(list.toString());
 
-let merge = List.merge(list, copy)
+// get the index for Lazy
+console.log(list.indexOf("Lazy"));
+
+// create a list from an array
+let l = List.fromArray(["Lazy", "Foxes", "Over", "Rainbow"]);
+
+// non modifiable list
+let immune = new ImmutableList(l);
