@@ -37,7 +37,7 @@ export class List<T> {
      * @param object
      */
     static fromJson<U>(object: {
-        type: 'List',
+        type: 'list',
         value: U[]
     }): List<U>
 
@@ -302,7 +302,7 @@ export class ImmutableList<T> extends List<T> {
      * Create an immutable list from a list
      * @param list any list
      */
-    constructor(list: List<T>): ImmutableList<T>;
+    constructor(list: List<T>);
 
     /**
      * Merge multiple immutable lists into one
