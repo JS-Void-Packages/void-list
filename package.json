@@ -11,9 +11,9 @@
     "Java List"
   ],
   "repository": {
-    "url": "https://github.com/JS-Void-Packages/void-list",
+    "url": "git+https://github.com/JS-Void-Packages/void-list.git",
     "type": "git"
   },
   "author": "Mrthomas20121",
-  "license": "MIT" 
+  "license": "MIT"
 }
