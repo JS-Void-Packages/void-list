@@ -115,3 +115,8 @@
 
 ### Fixed
 - fixed a few errors with the List
+
+## [1.1.6] 31-01-2023
+
+### Fixed
+- fixed a typo in `List.fromJson();`
