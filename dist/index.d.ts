@@ -243,11 +243,16 @@ export class List<T> {
     }
 
     /**
-     * Sort the list based on the predicate result.
-     * Work the same way as Array.sort()
-     * @param predicate
+     * Sorts an list in place.
+     * This method mutates the list and returns a reference to the same list.
+     * @param compareFn Function used to determine the order of the elements. It is expected to return
+     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+     * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.
+     * ```ts
+     * [11,2,22,1].sort((a, b) => a - b)
+     * ```
      */
-    sort(predicate: (a: T, b: T) => number): void
+    sort(compareFn?: (a: T, b: T) => number): void
 
     /**
      * Replace the value at the index by a new value.
@@ -295,7 +300,7 @@ export class List<T> {
 }
 
 /**
- * An ImmutableList is a list that cannot be modified
+ * a list that cannot be modified after it was created.
  */
 export class ImmutableList<T> extends List<T> {
     /**

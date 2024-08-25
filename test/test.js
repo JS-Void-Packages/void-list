@@ -29,3 +29,9 @@ let l = List.fromArray(["Lazy", "Foxes", "Over", "Rainbow"]);
 
 // non modifiable list
 let immune = new ImmutableList(l);
+
+// try to add a value to the list
+immune.add('test');
+
+// log the value and index
+immune.forEach((e, i) => console.log(e, i))
