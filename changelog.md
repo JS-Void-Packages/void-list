@@ -120,3 +120,9 @@
 
 ### Fixed
 - fixed a typo in `List.fromJson();`
+
+## [1.1.7] 25-08-2024
+
+### Change
+- added more tests
+- fixed a few methods 
