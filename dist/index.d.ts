@@ -243,6 +243,11 @@ export class List<T> {
     }
 
     /**
+     * Get a random element from the list
+     */
+    getRandomElement(): T
+
+    /**
      * Sorts an list in place.
      * This method mutates the list and returns a reference to the same list.
      * @param compareFn Function used to determine the order of the elements. It is expected to return

@@ -123,6 +123,13 @@
 
 ## [1.1.7] 25-08-2024
 
-### Change
-- added more tests
+### Added
+- more tests
+
+### Fixed
 - fixed a few methods 
+
+## [1.1.8] 17-10-2024
+
+### Added
+- `getRandomElement()` return a random element from the list

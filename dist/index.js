@@ -416,6 +416,14 @@ class List {
         return `List [${this.#internal}]`;
     }
 
+    /**
+     * Return a random element from the list
+     * @returns a random element
+     */
+    getRandomElement() {
+        return this.get(Math.floor(Math.random() * this.#internal.length))
+    }
+
     sort(predicate) {
         this.#internal.sort(predicate);
     }
